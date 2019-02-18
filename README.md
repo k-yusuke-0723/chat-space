@@ -52,6 +52,7 @@ Things you may want to cover:
 ### Association
 - has_many :members
 - has many :users, through: :members
+- has many :messages
 
 
 
