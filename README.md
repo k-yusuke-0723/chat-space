@@ -24,16 +24,21 @@ Things you may want to cover:
 * ...
 
 
+
+# DB設計
+
+
 ## usersテーブル
 
 |Column|Type|Options|
 |------|----|-------|
 |user_id|integer|
-|name|string|
-|email|string|
+|name|string|index: true, null: false, unique: true|
+|mail|string|null: false|
 
 ### Association
 - has_many :members
+- has many :messages
 - has many :groups, through: :members
 
 
@@ -70,13 +75,14 @@ Things you may want to cover:
 
 |Column|Type|Options|
 |------|----|-------|
-|body|text|
+|body|text|null: false|
 |image|string|
-|group_id|integer|
-|user_id|integer|
+|group_id|integer|null: false, foreign_key: true|
+|user_id|integer|null: false, foreign_key: true|
 
 ### Association
-
+- belongs_to :group
+- has many :members
 
 
 
