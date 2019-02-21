@@ -1,0 +1,10 @@
+.flashbox {
+  color: white;
+  font-size: 1rem;
+  font-weight: lighter;
+  text-align: center;
+  width: 100vw;
+  &.__notice {
+    background-color: #38aef0;
+  }
+}
