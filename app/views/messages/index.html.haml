@@ -1,67 +1,31 @@
-    .flashbox
-      .flashbox__notice グループを作成しました
+.wrapper
 
-    .wrapper
-      .chat-side
+  = render 'shared/side_bar'
 
-        .side-header
-          .side-header__box
-            %p.side-header__box__user-name
-              test-user
+  .chat
+    .header
+      .left-header
+        .left-header__title
+          グループ名
+        %ul.left-header__members
+          Member：
+          %li.member
+            メンバー名
+          %li.member
+            メンバー名
+          %li.member
+            メンバー名
+      .right-header
+        .right-header__button
+          Edit
+    .messages
+      = render @messages
 
-            .side-header__box__menu
-              %li.side-header__box__menu__edit-user
-              %li.side-header__box__menu__new-group
-
-        .groups
-
-          .group
-            %p.group__group-name
-              test-user
-            %p.group__latest-message
-              さようなら
-
-          .group
-            %p.group__group-name
-              sample-group
-            %p.group__latest-message
-              hello!
-
-          .group
-            %p.group__group-name
-              example
-            %p.group__latest-message
-              まだメッセージがありません
-
-
-      .chat-main
-
-        .main-header
-          .main-header__left-box
-            .p1 test-acount
-            .p2 Member:test-user
-
-          .main-header__edit-btn Edit
-
-
-        .messages
-
-          .message
-            .message__upper-info
-              %p.message__upper-info__user test-user
-              %p.message__upper-info__date 2019/02/17(Sun) 14:32:21
-            %p.message__text こんにちは！
-
-          .message
-            .message__upper-info
-              %p.message__upper-info__user test-user
-              %p.message__upper-info__date 2019/02/17(Sun) 15:00:32
-            %p.message__text さようなら！
-
-        .form
-          %form#new_message.new_message
-            .input-box
-            .submit-btn Send
-            .side-header__box__menu
-              %li.side-header__box__menu__edit-user
-              %li.side-header__box__menu__new-group
+    .form
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+        .form__mask
+          = f.label :image, class: 'form__mask__image' do
+            = fa_icon 'picture-o', class: 'icon'
+            = f.file_field :image, class: 'hidden'
+        = f.submit 'Send', class: 'form__submit'
