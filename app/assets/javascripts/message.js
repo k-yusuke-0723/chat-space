@@ -1,5 +1,5 @@
 $(function(){
-function buildHTML(message){
+function buildSendMessageHTML(message){
 
 var html = `<div class="message">
               <div class="upper-message">
@@ -32,8 +32,8 @@ var html = `<div class="message">
       processData: false,
       contentType: false
     })
-    .done(function(data){
-      var html = buildHTML(data);
+    .done(function(message){
+      var html = buildSendMessageHTML(message);
       $('.messages').append(html);
       $('.form__message').val('');
       $('.form__submit').prop('disabled', false);
