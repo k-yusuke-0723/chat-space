@@ -3,4 +3,5 @@ json.array!  @new_messages do |message|
   json.time      message.created_at
   json.content   message.content
   json.id        message.id
+  json.image     message.image.url
 end
