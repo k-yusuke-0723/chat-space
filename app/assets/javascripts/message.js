@@ -1,7 +1,9 @@
 $(function(){
 function buildSendMessageHTML(message){
 
-var html = `<div class="message">
+var image = message.image ? `<img src="${message.image}">` : '';
+
+var html = `<div class="message" data-message-id="${message.id}">
               <div class="upper-message">
                 <div class="upper-message__user-name">
                   ${ message.user_name }
@@ -14,15 +16,17 @@ var html = `<div class="message">
                 <p class="lower-message__content">
                   ${ message.content }
                 </p>
+                  ${ image }
               </div>
             </div>`;
   return html;
 }
 
+
   $('#new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
@@ -42,4 +46,28 @@ var html = `<div class="message">
       alert('メッセージを入力してください');
     })
   })
+
+  var interval = setInterval(function(){
+    var last_id = $('.message:last').data('message-id');
+    if (window.location.href.match(/\/groups\/\d+\/messages/)) {
+      $.ajax({
+        url: location.href,
+        type: 'GET',
+        data: {id: last_id},
+        dataType: 'json'
+      })
+      .done(function(data){
+        data.forEach(function(message){
+        var html = buildSendMessageHTML(message);
+        $('.messages').append(html);
+        });
+        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight});
+      })
+      .fail(function(data){
+        alert('自動更新できません。');
+      });
+  } else {
+      clearInterval(interval);
+    }
+    }, 5000);
 });
